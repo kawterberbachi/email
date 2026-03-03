@@ -1,18 +1,19 @@
 from flask import Flask, render_template, request, jsonify
 from flask_mail import Mail, Message
-
+import os
 app = Flask(__name__)
 app.secret_key = "change_this_to_a_secure_key"
 
 # ===============================
 # CONFIGURATION GMAIL
 # ===============================
+
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = 'kawterk411@gmail.com'  # 🔴 Ton Gmail
-app.config['MAIL_PASSWORD'] = 'stbn sugi hlkn ykmf'   # 🔴 Mot de passe d’application
+app.config['MAIL_USERNAME'] = os.environ.get("MAIL_USERNAME")
+app.config['MAIL_PASSWORD'] = os.environ.get("MAIL_PASSWORD")  # 🔴 Mot de passe d’application
 
 mail = Mail(app)
 
