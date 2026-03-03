@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changer le mot de passe</title>
+<style>
+* { box-sizing: border-box; margin:0; padding:0; }
+body { font-family:'Arial',sans-serif; background:linear-gradient(135deg,#f0f4f8,#d9e2ec); display:flex; justify-content:center; align-items:center; min-height:100vh; }
+.container { background:white; padding:40px 30px; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.1); width:100%; max-width:400px; }
+h2 { text-align:center; margin-bottom:30px; font-size:24px; color:#333; }
+.input-group { margin-bottom:20px; }
+label { display:block; font-weight:bold; margin-bottom:8px; color:#555; }
+input { width:100%; padding:12px 15px; border:1px solid #ccc; border-radius:8px; font-size:14px; transition:border 0.3s; }
+input:focus { border-color:#007BFF; outline:none; }
+button { width:100%; padding:12px; background-color:#007BFF; color:white; font-size:16px; border:none; border-radius:8px; cursor:pointer; transition:background 0.3s; }
+button:hover { background-color:#0056b3; }
+ul { margin-top:20px; list-style:none; padding:0; }
+ul li { background-color:#e0f0ff; padding:10px; border-radius:5px; margin-bottom:5px; color:#007BFF; font-weight:bold; text-align:center; }
+@media(max-width:420px){ .container{ padding:30px 20px; } }
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Changer le mot de passe</h2>
+<form id="passwordForm">
+    <div class="input-group">
+        <label for="currentPassword">Mot de passe actuel</label>
+        <input type="password" id="currentPassword" name="currentPassword" required>
+    </div>
+    <div class="input-group">
+        <label for="newPassword">Nouveau mot de passe</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+    </div>
+    <div class="input-group">
+        <label for="confirmPassword">Confirmer le nouveau mot de passe</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+    </div>
+    <button type="submit">Mettre à jour</button>
+</form>
+<ul id="messages"></ul>
+
+<script>
+document.getElementById("passwordForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    const currentPassword = document.getElementById("currentPassword").value;
+    const newPassword = document.getElementById("newPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if(newPassword !== confirmPassword){
+        alert("Les mots de passe ne correspondent pas.");
+        return;
+    }
+    if(newPassword.length < 6){
+        alert("Le mot de passe doit contenir au moins 6 caractères.");
+        return;
+    }
+
+    const formData = { currentPassword, newPassword, confirmPassword };
+
+    try{
+        const response = await fetch("/changer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+        const messages = document.getElementById("messages");
+        messages.innerHTML = "";
+        if(result.success){
+            messages.innerHTML = "<li>Mot de passe mis à jour avec succès !</li>";
+            document.getElementById("passwordForm").reset();
+        } else {
+            messages.innerHTML = "<li>Erreur : " + (result.error || "Veuillez réessayer") + "</li>";
+        }
+
+    } catch(error){
+        console.error(error);
+        alert("Erreur de connexion au serveur.");
+    }
+});
+</script>
+</div>
+</body>
+</html>
